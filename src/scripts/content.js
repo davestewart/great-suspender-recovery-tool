@@ -150,7 +150,7 @@ const app = new Vue({
 
     async bookmarkData () {
       // constants
-      const bookmarkBarId = '1'
+      const bookmarkBarId = '2'
       const rootFolderTitle = 'Recovered Great Suspender Tabs'
       const grouped = this.grouped
       const numGroups = Object.keys(grouped).length
@@ -199,8 +199,15 @@ const app = new Vue({
       })
 
       // alert
-      return Promise.all(promises).then(function () {
-        alert(`Recovery complete!:\n\n- Saved ${numTabs} tabs\n- Created ${numGroups} folders\n- in Bookmarks Bar/${rootFolderTitle} !`)
+      return Promise.all(promises).then(() => {
+        this.message = `
+          <h5>Recovery complete!</h5>
+          <ul>
+            <li>Saved ${numTabs} tabs</li>
+            <li>Created ${numGroups} folders</li>
+            <li>Check "Other Bookmarks/${rootFolderTitle}"</li>
+          </ul>
+          `
       })
     },
 
@@ -235,7 +242,10 @@ const app = new Vue({
 
         // copy
         copyTextToClipboard(data.join('\n'))
-        this.message = 'Data copied OK!'
+        this.message = `
+          <h5>Data copied OK!</h5>
+          <p>You can now paste it into a spreadsheet</p>
+          `
       }
 
       // fail!

@@ -132,18 +132,24 @@ p {
  */
 
 .toast {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  bottom: 0;
   right: 0;
   margin: 20px;
   padding-left: 15px;
   width: auto;
   box-shadow: 0 20px 30px rgba(0, 0, 0, .2);
   z-index: 10;
+  white-space: nowrap;
+  min-width: 300px;
 }
 
 .toast .btn {
   margin-left: 10px;
+}
+
+.toast > div {
+  margin-right: 30px;
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------

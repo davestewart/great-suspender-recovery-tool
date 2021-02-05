@@ -28,12 +28,12 @@
 
     <!-- controls -->
     <div class="options" v-if="items.length">
-      <div class="form-group">
+      <div v-if="options.mode === 'list'" class="form-group">
         <span class="form-label">&nbsp;</span>
-        <button class="btn btn-primary" @click="bookmarkData">Bookmark tabs</button>
+        <button class="btn btn-primary" @click="bookmarkData">Bookmark Tabs</button>
       </div>
 
-      <div class="form-group">
+      <div v-if="options.mode === 'table'" class="form-group">
         <span class="form-label">&nbsp;</span>
         <button class="btn btn-primary" @click="copyData">Copy to Clipboard</button>
       </div>
@@ -88,10 +88,10 @@
       </div>
     </div>
 
-    <!-- success -->
-    <div v-if="message" class="toast toast-primary">
+    <!-- toast -->
+    <div v-if="message" class="toast">
       <button class="btn btn-clear float-right" @click="message = ''"></button>
-      {{ message }}
+      <div class="toast-content" v-html="message"></div>
     </div>
 
     <!-- items -->
@@ -100,7 +100,7 @@
       <!-- list -->
       <div v-if="options.mode === 'list'">
         <section v-for="(group, name) in grouped" ref="group.title" class="group">
-          <h4 class="group__title">{{ name }}</h4>
+          <h5 class="group__title">{{ name }}</h5>
           <div class="group__items">
             <div v-for="item in group" ref="item.url" class="item">
               <img :src="getIcon(item)" width="16" height="16" class="item__icon">
