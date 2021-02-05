@@ -23,14 +23,14 @@
     <h4>
       <span v-if="!loaded">Querying search history...</span>
       <span v-else-if="items.length">Found: {{ items.length }} items</span>
-      <span v-else>No suspended tabs found</span>
+      <span v-else class="text-error">No suspended tabs found</span>
     </h4>
 
     <!-- controls -->
-    <div class="options">
+    <div class="options" v-if="items.length">
       <div class="form-group">
         <span class="form-label">&nbsp;</span>
-        <button class="btn btn-primary" @click="copyData">Bookmark tabs</button>
+        <button class="btn btn-primary" @click="bookmarkData">Bookmark tabs</button>
       </div>
 
       <div class="form-group">
@@ -63,7 +63,7 @@
         <span class="form-label">Sort by</span>
         <select class="form-select" v-model="options.sortBy">
           <option value="domain">Domain</option>
-          <option value="time">Date / Time</option>
+          <option value="date">Date / Time</option>
           <option value="count">Visit Count</option>
         </select>
       </div>
@@ -140,6 +140,12 @@
         </tbody>
       </table>
     </div>
+
+    <!-- no tabs -->
+    <div v-else>
+      It's possible that your history just doesn't contain any suspended tabs. Sorry!
+    </div>
+
   </main>
 
   <!-- popover -->

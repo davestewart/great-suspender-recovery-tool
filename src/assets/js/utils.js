@@ -132,3 +132,13 @@ function copyTextToClipboard (text) {
   // other elements can get access to this.
   document.body.removeChild(copyFrom)
 }
+
+function createBookmark (info) {
+  return new Promise(function (resolve, reject) {
+    chrome.bookmarks.create(info, function (bookmark) {
+      arguments.length === 0 && chrome.runtime.lastError
+        ? reject(chrome.runtime.lastError.message)
+        : resolve(bookmark)
+    })
+  })
+}

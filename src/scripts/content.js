@@ -1,4 +1,13 @@
-/* global getVisitTime:true, dedupe:true, copyTextToClipboard: true, sortBy: true, getFavIcon2:true */
+/*
+  global getVisitTime:true,
+  dedupe:true,
+  sortBy: true,
+  copyTextToClipboard: true,
+  getFavIcon:true,
+  createBookmark: true,
+*/
+
+const isDev = false
 
 const app = new Vue({
   el: '#app',
@@ -7,14 +16,14 @@ const app = new Vue({
     loaded: false,
     items: [],
     message: '',
-    promo: true,
-    test: true,
+    promo: !isDev,
+    test: isDev,
     options: {
       mode: 'list',
       groupBy: 'domain',
       sortBy: 'date',
-      format: 'data',
-      relativeTime: false,
+      format: 'all',
+      relativeTime: true,
     },
   },
 
@@ -92,7 +101,7 @@ const app = new Vue({
       if (this.test) {
         Object.assign(query, {
           text: 'a',
-          maxResults: 100,
+          maxResults: 30,
         })
       }
 
@@ -139,8 +148,60 @@ const app = new Vue({
       return getFavIcon(item.url)
     },
 
-    bookmarkData () {
+    async bookmarkData () {
+      // constants
+      const bookmarkBarId = '1'
+      const rootFolderTitle = 'Recovered Great Suspender Tabs'
+      const grouped = this.grouped
+      const numGroups = Object.keys(grouped).length
+      const numTabs = this.sorted.length
 
+      // remove old folder
+      await new Promise(function (resolve, reject) {
+        chrome.bookmarks.getChildren(bookmarkBarId, function (bookmarks) {
+          const folder = bookmarks.find(bookmark => bookmark.title === rootFolderTitle)
+          if (folder) {
+            console.log('Removing old folder...')
+            chrome.bookmarks.removeTree(folder.id, resolve)
+          }
+          else {
+            resolve()
+          }
+        })
+      })
+
+      // create root folder
+      const root = await createBookmark({
+        parentId: bookmarkBarId,
+        title: rootFolderTitle,
+      })
+
+      // loop over groups
+      const promises = Object.keys(grouped).map(async function (key) {
+        // create group folder
+        const folder = await createBookmark({
+          parentId: root.id,
+          title: key,
+        })
+
+        // loop over items
+        const items = grouped[key]
+        const promises = items.map(async function (item) {
+          return await createBookmark({
+            parentId: folder.id,
+            title: item.title,
+            url: item.url,
+          })
+        })
+
+        // complete promises
+        return Promise.all(promises)
+      })
+
+      // alert
+      return Promise.all(promises).then(function () {
+        alert(`Recovery complete!:\n\n- Saved ${numTabs} tabs\n- Created ${numGroups} folders\n- in Bookmarks Bar/${rootFolderTitle} !`)
+      })
     },
 
     copyData () {
