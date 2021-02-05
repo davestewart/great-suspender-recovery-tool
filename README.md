@@ -10,9 +10,10 @@ This extension attempts to recover your suspended Great Suspender tabs by search
 
 You can then:
 
-- adjust grouping, sorting and detail
-- save as folders and bookmarks
-- copy URLs to the clipboard
+- browse as a [nested list](artwork/screenshot-list.png) or a [table](artwork/screenshot-table.png)
+- adjust grouping, sorting and level of detail
+- save as [folders and bookmarks](artwork/screenshot-bookmarks.png)
+- or copy data to spreadsheet
 
 
 ## Installation
@@ -32,9 +33,8 @@ Until the extension is in the app store, you can "side load" it using developer 
 
 ### Installation from the Chrome Web Store
 
-1. Go to the Chrome Web Store
-2. Visit this URL (TBC)
-3. Click "Add to Chrome"
+1. Go the extensions's Chrome Web Store [page](https://chrome.google.com/webstore/detail/great-suspender-recovery/ainlmpkfinfbbgdpimmldfdgpenmclmk) *(this won't work yet)*
+2. Click "Add to Chrome"
 
 
 ## Instructions
@@ -67,15 +67,17 @@ you're going to need a replacement.
 [Control Space](http://controlspace.app) is a soon-to-be-released tab manager designed for busy professionals, to browse,
 organise, search and switch tabs with one simple shortcut.
 
-It's smooth and fast yet brimming with features:
+It's smooth and fast and yet brimming with features:
 
-- quickly search and filter
-- see open, closed and saved tabs in once place
-- drag and drop everything
-- completely keyboard navigable
-- website integrations + tools (including sleeping tabs!)
+- it's an actual, ***actual*** tab manager
+- see open, closed and saved tabs **in once place**
+- **search and filter** like a boss
+- **drag and drop** everything
+- completely **keyboard navigable**
+- **website integrations** + tools (including sleeping tabs!)
+- lots of other **awesome** shit
 
-Click here to [take a look](http://controlspace.app).
+[Click here to sign up to early access](http://controlspace.app)🤘
 
 
 ## Running in test mode
