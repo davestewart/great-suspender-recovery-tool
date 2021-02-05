@@ -59,7 +59,7 @@ Copying to a spreadsheet:
 
 ## Are you looking for a new tab manager!?
 
-![control space](http://controlspace.app/images/mail/header.png)
+[![control space](http://controlspace.app/images/mail/header.png)](http://controlspace.app)
 
 Now that The Great Suspender has been removed from the Chrome Web Store,
 you're going to need a replacement.
