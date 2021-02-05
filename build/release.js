@@ -3,14 +3,14 @@ const fs = require('fs')
 const zip = require('bestzip')
 
 const target = Path.resolve(__dirname, '../../releases')
-const manifest = require('../src/manifest.json')
+const manifest = require('../code/manifest.json')
 
 if (!fs.existsSync(target)) {
   fs.mkdirSync(target)
 }
 
 zip({
-  cwd: 'src',
+  cwd: 'code',
   source: '*',
   destination: `${target}/${manifest.name} ${manifest.version}.zip`,
 }).then(function () {

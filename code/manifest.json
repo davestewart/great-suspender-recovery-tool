@@ -14,8 +14,7 @@
     "history",
     "bookmarks",
     "clipboardWrite",
-    "chrome://favicon/*",
-    "chrome://favicon2/*"
+    "chrome://favicon/*"
   ],
   "background": {
     "persistent": false,

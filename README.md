@@ -40,7 +40,7 @@ Until the extension is in the app store, you can "side load" it using developer 
 
 Running the extension:
 
-1. Run the extension by clicking on the toolbar icon: ![icon](src/assets/icons/icon-16.png)
+1. Run the extension by clicking on the toolbar icon: ![icon](code/assets/icons/icon-16.png)
 
 Saving as bookmarks:
 
