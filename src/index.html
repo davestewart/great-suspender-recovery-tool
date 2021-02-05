@@ -13,11 +13,11 @@
   <link rel="stylesheet" href="assets/fonts/muli.css">
 </head>
 <body>
-<div id="app" :data-format="options.format" :data-promo="promo" >
+<div id="app" :data-format="options.format" :data-promo="promo">
 
   <!-- main -->
   <main>
-    <h1>The Great Suspender - Recovery Tool</h1>
+    <h1>The Great Suspender Recovery Tool</h1>
 
     <!-- status -->
     <h4>
@@ -28,19 +28,59 @@
 
     <!-- controls -->
     <div class="options">
-      <button class="btn btn-primary" @click="copyData">Bookmark tabs</button>
-
-      <button class="btn btn-primary" @click="copyData">Copy to Clipboard</button>
-
       <div class="form-group">
-        <select class="form-select" v-model="options.format">
-          <option value="all">All visit data</option>
-          <option value="data">Title and URL</option>
-          <option value="url">URL only</option>
-        </select>
+        <span class="form-label">&nbsp;</span>
+        <button class="btn btn-primary" @click="copyData">Bookmark tabs</button>
       </div>
 
       <div class="form-group">
+        <span class="form-label">&nbsp;</span>
+        <button class="btn btn-primary" @click="copyData">Copy to Clipboard</button>
+      </div>
+
+      <!-- mode -->
+      <div class="form-group">
+        <span class="form-label">Display</span>
+        <select class="form-select" v-model="options.mode">
+          <option value="list">List</option>
+          <option value="table">Table</option>
+        </select>
+      </div>
+
+      <!-- group by -->
+      <div class="form-group">
+        <span class="form-label">Group by</span>
+        <select class="form-select" v-model="options.groupBy">
+          <option value="domain">Domain</option>
+          <option value="date">Date</option>
+          <option value="relativeTime">Relative time</option>
+          <option value="count">Visit count</option>
+        </select>
+      </div>
+
+      <!-- sort by -->
+      <div class="form-group">
+        <span class="form-label">Sort by</span>
+        <select class="form-select" v-model="options.sortBy">
+          <option value="domain">Domain</option>
+          <option value="time">Date / Time</option>
+          <option value="count">Visit Count</option>
+        </select>
+      </div>
+
+      <!-- format -->
+      <div class="form-group">
+        <span class="form-label">Sort by</span>
+        <select class="form-select" v-model="options.format">
+          <option value="all">All visit data</option>
+          <option value="data">Title and URL</option>
+          <option v-if="options.mode === 'table'" value="url">URL only</option>
+        </select>
+      </div>
+
+      <!-- show relative time -->
+      <div class="form-group">
+        <span class="form-label">&nbsp</span>
         <label class="form-switch">
           <input type="checkbox" v-model="options.relativeTime">
           <i class="form-icon"></i> Relative time
@@ -55,24 +95,51 @@
     </div>
 
     <!-- items -->
-    <table v-if="items.length" class="table">
-      <thead>
-      <tr>
-        <th v-if="showAll">Visits</th>
-        <th v-if="showAll">Last Visit</th>
-        <th v-if="showData">Title</th>
-        <th>URL</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="item in items" ref="item.id">
-        <td v-if="showAll">{{ item.count }}</td>
-        <td v-if="showAll">{{ getVisitTime(item) }}</td>
-        <td v-if="showData"><a :href="item.url">{{ item.title }}</a></td>
-        <td>{{ item.url }}</td>
-      </tr>
-      </tbody>
-    </table>
+    <div v-if="items.length">
+
+      <!-- list -->
+      <div v-if="options.mode === 'list'">
+        <section v-for="(group, name) in grouped" ref="group.title" class="group">
+          <h4 class="group__title">{{ name }}</h4>
+          <div class="group__items">
+            <div v-for="item in group" ref="item.url" class="item">
+              <img :src="getIcon(item)" width="16" height="16" class="item__icon">
+              <div class="item__text">
+                <a :href="item.url" class="item__link">
+                  <span class="item__title">{{ item.title }}</span>
+                </a>
+                <div v-if="showAll" class="item__info">
+                  <span>{{ item.count }} visits</span><span>{{ options.relativeTime ? item.relativeTime : item.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- table -->
+      <table v-if="options.mode === 'table'" class="table">
+        <thead>
+        <tr>
+          <th v-if="showAll">Visits</th>
+          <th v-if="showAll">Last Visit</th>
+          <th v-if="showData">Title</th>
+          <th>URL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in sorted" ref="item.id">
+          <td v-if="showAll" class="table__info">{{ item.count }}</td>
+          <td v-if="showAll" class="table__info">{{ getVisitTime(item) }}</td>
+          <td v-if="showData">
+            <img :src="getIcon(item)" width="16" height="16" class="item__icon">
+            <a :href="item.url" class="table__link">{{ item.title }}</a>
+          </td>
+          <td class="table__info">{{ item.url }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
   </main>
 
   <!-- popover -->
@@ -91,6 +158,7 @@
           you're going to need a replacement.</p>
         <p><strong>Control Space</strong> is a new tab manager designed for busy professionals, to browse,
           organise, search and switch tabs with one simple shortcut.</p>
+        <p>It's smooth and fast, and brimming with features... <em>including</em> sending tabs to sleep.</p>
       </div>
       <div class="card-footer text-right" @click="promo = false">
         <a class="btn btn-primary" href="https://controlspace.app" target="_blank">Show me now!</a>

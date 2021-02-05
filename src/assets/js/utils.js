@@ -3,29 +3,8 @@ function timeAgo (time) {
   let ago = Math.floor(ms / 1000)
   let part = 0
 
-  if (ago < 2) {
-    return 'a moment ago'
-  }
-  if (ago < 5) {
-    return 'moments ago'
-  }
-  if (ago < 60) {
-    return ago + ' seconds ago'
-  }
-
-  if (ago < 120) {
-    return 'a minute ago'
-  }
-  if (ago < 3600) {
-    while (ago >= 60) {
-      ago -= 60
-      part += 1
-    }
-    return part + ' minutes ago'
-  }
-
   if (ago < 7200) {
-    return 'an hour ago'
+    return '1 hour ago'
   }
   if (ago < 86400) {
     while (ago >= 3600) {
@@ -36,7 +15,7 @@ function timeAgo (time) {
   }
 
   if (ago < 172800) {
-    return 'a day ago'
+    return '1 day ago'
   }
   if (ago < 604800) {
     while (ago >= 172800) {
@@ -47,7 +26,7 @@ function timeAgo (time) {
   }
 
   if (ago < 1209600) {
-    return 'a week ago'
+    return '1 week ago'
   }
   if (ago < 2592000) {
     while (ago >= 604800) {
@@ -58,7 +37,7 @@ function timeAgo (time) {
   }
 
   if (ago < 5184000) {
-    return 'a month ago'
+    return '1 month ago'
   }
   if (ago < 31536000) {
     while (ago >= 2592000) {
@@ -79,7 +58,7 @@ function timeAgo (time) {
 function getVisitTime (timestamp, relative) {
   return relative
     ? timeAgo(timestamp)
-    : new Date(timestamp).toISOString().replace(/[TZ]/g, ' ').substr(0, 19)
+    : new Date(timestamp).toISOString().substr(0, 19).replace(/[TZ]/g, ' ')
 }
 
 function dedupe (items) {
@@ -94,6 +73,38 @@ function dedupe (items) {
       }
       return results
     }, [])
+}
+
+function sortBy (prop, numeric = false, order = 'asc') {
+  return function (a, b) {
+    // values
+    a = a[prop]
+    b = b[prop]
+
+    // order
+    if (order === 'desc') {
+      const t = a
+      a = b
+      b = t
+    }
+
+    // sort
+    if (a > b) {
+      return 1
+    }
+    if (a < b) {
+      return -1
+    }
+    return 0
+  }
+}
+
+function getFavIcon2 (pageUrl, size = 32) {
+  return `chrome://favicon2/?size=${size}&page_url=${pageUrl}&allow_google_server_fallback=1`
+}
+
+function getFavIcon (pageUrl, size = 32) {
+  return `chrome://favicon/size/${size}/${pageUrl}`
 }
 
 function copyTextToClipboard (text) {

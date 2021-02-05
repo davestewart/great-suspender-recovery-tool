@@ -1,4 +1,4 @@
-/* global getVisitTime:true, dedupe:true, copyTextToClipboard: true */
+/* global getVisitTime:true, dedupe:true, copyTextToClipboard: true, sortBy: true, getFavIcon2:true */
 
 const app = new Vue({
   el: '#app',
@@ -7,16 +7,43 @@ const app = new Vue({
     loaded: false,
     items: [],
     message: '',
-    promo: false,
+    promo: true,
     test: true,
     options: {
+      mode: 'list',
+      groupBy: 'domain',
+      sortBy: 'date',
       format: 'data',
       relativeTime: false,
-      sort: 'time',
     },
   },
 
   computed: {
+    sorted () {
+      const prop = this.options.sortBy
+      const numeric = ['time', 'count'].includes(prop)
+      const order = prop === 'count' ? 'desc' : 'asc'
+      return this.items.sort(sortBy(prop, numeric, order))
+    },
+
+    grouped () {
+      return this
+        .sorted
+        .reduce((output, item) => {
+          // group
+          const group = item[this.options.groupBy]
+          if (!output[group]) {
+            output[group] = []
+          }
+
+          // add item
+          output[group].push(item)
+
+          // return
+          return output
+        }, {})
+    },
+
     showAll () {
       return this.options.format === 'all'
     },
@@ -75,17 +102,30 @@ const app = new Vue({
 
     onResults (items) {
       this.items = dedupe(items).map(item => {
+        // cleanup
+        item.url = item.url.replace(/\/www\./, '/')
+
         // variables
-        const url = new URL(item.url)
-        const params = new URLSearchParams(url.hash.substr(1))
+        const model = new URL(item.url)
+        const params = new URLSearchParams(model.hash.substr(1))
         const time = item.lastVisitTime
 
         // data
+        const title = params.get('ttl') || item.title
+        const url = params.get('uri') || item.url
+        const dateTime = getVisitTime(time)
+        const relativeTime = getVisitTime(time, true)
+
+        // return
         return {
-          title: params.get('ttl') || item.title,
-          url: params.get('uri') || item.url,
-          time,
+          domain: new URL(url).hostname,
+          title,
+          url,
           count: item.visitCount,
+          dateTime,
+          date: dateTime.substring(0, 10),
+          relativeTime,
+          time: item.lastVisitTime,
         }
       })
       this.loaded = true
@@ -93,6 +133,10 @@ const app = new Vue({
 
     getVisitTime (item) {
       return getVisitTime(item.time, this.options.relativeTime)
+    },
+
+    getIcon (item) {
+      return getFavIcon(item.url)
     },
 
     bookmarkData () {

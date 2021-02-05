@@ -13,7 +13,9 @@
     "windows",
     "history",
     "bookmarks",
-    "clipboardWrite"
+    "clipboardWrite",
+    "chrome://favicon/*",
+    "chrome://favicon2/*"
   ],
   "background": {
     "persistent": false,
@@ -29,5 +31,5 @@
       "32": "assets/icons/icon-32.png"
     }
   },
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'; img-src * 'self' data: https: http: chrome: chrome://favicon/"
 }
