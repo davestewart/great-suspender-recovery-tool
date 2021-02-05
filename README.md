@@ -61,7 +61,7 @@ Copying to a spreadsheet:
 If you don't have any Great Suspender tabs saved, you can check the extension works by appending the following query to the URL:
 
 ```
-?test=1
+?test
 ```
 
 ## Development

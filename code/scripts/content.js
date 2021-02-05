@@ -7,7 +7,8 @@
   createBookmark: true,
 */
 
-const isTest = location.search.includes('test=1')
+const isTest = location.search.includes('test')
+const isPromo = location.search.includes('promo')
 
 const app = new Vue({
   el: '#app',
@@ -16,7 +17,7 @@ const app = new Vue({
     loaded: false,
     items: [],
     message: '',
-    promo: !isTest,
+    promo: !isTest || isPromo,
     test: isTest,
     options: {
       mode: 'list',
