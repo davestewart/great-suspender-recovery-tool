@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Great Suspender - Recovery Tool</title>
+
+  <!-- vendor -->
+  <link rel="stylesheet" href="assets/vendor/spectre.min.css">
+  <script src="assets/vendor/vue.js"></script>
+
+  <!-- app -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/fonts/muli.css">
+</head>
+<body>
+<div id="app" :data-format="options.format" :data-promo="promo" >
+
+  <!-- main -->
+  <main>
+    <h1>The Great Suspender - Recovery Tool</h1>
+
+    <!-- status -->
+    <h4>
+      <span v-if="!loaded">Querying search history...</span>
+      <span v-else-if="items.length">Found: {{ items.length }} items</span>
+      <span v-else>No suspended tabs found</span>
+    </h4>
+
+    <!-- controls -->
+    <div class="options">
+      <button class="btn btn-primary" @click="copyData">Bookmark tabs</button>
+
+      <button class="btn btn-primary" @click="copyData">Copy to Clipboard</button>
+
+      <div class="form-group">
+        <select class="form-select" v-model="options.format">
+          <option value="all">All visit data</option>
+          <option value="data">Title and URL</option>
+          <option value="url">URL only</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-switch">
+          <input type="checkbox" v-model="options.relativeTime">
+          <i class="form-icon"></i> Relative time
+        </label>
+      </div>
+    </div>
+
+    <!-- success -->
+    <div v-if="message" class="toast toast-primary">
+      <button class="btn btn-clear float-right" @click="message = ''"></button>
+      {{ message }}
+    </div>
+
+    <!-- items -->
+    <table v-if="items.length" class="table">
+      <thead>
+      <tr>
+        <th v-if="showAll">Visits</th>
+        <th v-if="showAll">Last Visit</th>
+        <th v-if="showData">Title</th>
+        <th>URL</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="item in items" ref="item.id">
+        <td v-if="showAll">{{ item.count }}</td>
+        <td v-if="showAll">{{ getVisitTime(item) }}</td>
+        <td v-if="showData"><a :href="item.url">{{ item.title }}</a></td>
+        <td>{{ item.url }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </main>
+
+  <!-- popover -->
+  <div v-if="promo" class="promo-container">
+    <div class="card promo">
+      <div class="card-image">
+        <img src="http://controlspace.app/images/mail/header.png" class="img-responsive">
+      </div>
+      <div class="card-header">
+        <div class="card-title h2">Looking for a new tab manager!?</div>
+        <div class="card-subtitle text-gray">
+        </div>
+      </div>
+      <div class="card-body">
+        <p>Now that The Great Suspender has been removed from the Chrome Web Store,
+          you're going to need a replacement.</p>
+        <p><strong>Control Space</strong> is a new tab manager designed for busy professionals, to browse,
+          organise, search and switch tabs with one simple shortcut.</p>
+      </div>
+      <div class="card-footer text-right" @click="promo = false">
+        <a class="btn btn-primary" href="https://controlspace.app" target="_blank">Show me now!</a>
+        <button class="btn">No thanks</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script src="assets/js/utils.js"></script>
+<script src="scripts/content.js"></script>
+</body>
+</html>

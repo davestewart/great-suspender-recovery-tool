@@ -1,0 +1,79 @@
+body {
+  padding: 20px;
+  overflow-x: auto;
+  overflow-y: scroll;
+  font-family: Muli, sans-serif, "SF Mono", "Segoe UI Mono", "Roboto Mono", Menlo, Courier, monospace;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.table td {
+  white-space: nowrap;
+}
+
+.table td, .table th {
+  max-width: calc(50vw - 40px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: .3rem .4rem;
+}
+
+#app[data-format="all"] .table td:first-child {
+  text-align: right;
+}
+
+.options {
+  display: flex;
+  margin: 20px 0;
+}
+
+.options > * {
+  margin-right: 10px;
+}
+
+.toast {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+  padding-left: 15px;
+  width: auto;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, .2);
+  z-index: 10;
+}
+
+.toast .btn {
+  margin-left: 10px;
+}
+
+#app[data-promo] main {
+  xopacity: .2;
+}
+
+.promo-container:after {
+  position: absolute;
+  display: block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, .7);
+  content: ".";
+}
+
+.promo {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+  width: 650px;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, .2);
+  z-index: 5;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.5;
+}

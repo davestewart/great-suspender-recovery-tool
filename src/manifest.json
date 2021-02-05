@@ -1,0 +1,33 @@
+{
+  "name": "The Great Suspender Recovery Tool",
+  "description" : "Recover your lost Great Suspender Tabs!",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "permissions": [
+    "windows",
+    "history",
+    "bookmarks",
+    "clipboardWrite"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "web_accessible_resources": [
+    "index.html"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "32": "assets/icons/icon-32.png"
+    }
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
