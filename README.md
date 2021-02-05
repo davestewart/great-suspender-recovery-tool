@@ -56,6 +56,27 @@ Copying to a spreadsheet:
 3. Click "Copy to Clipboard"
 4. Paste into a spreadsheet
 
+## Are you looking for a new tab manager!?
+
+![control space](http://controlspace.app/images/mail/header.png)
+
+Now that The Great Suspender has been removed from the Chrome Web Store,
+you're going to need a replacement.
+
+[Control Space](http://controlspace.app) is a soon-to-be-released tab manager designed for busy professionals, to browse,
+organise, search and switch tabs with one simple shortcut.
+
+It's smooth and fast yet brimming with features:
+
+- quickly search and filter
+- see open, closed and saved tabs in once place
+- drag and drop everything
+- completely keyboard navigable
+- website integrations + tools (including sleeping tabs!)
+
+Click here to [take a look](http://controlspace.app).
+
+
 ## Running in test mode
 
 If you don't have any Great Suspender tabs saved, you can check the extension works by appending the following query to the URL:
