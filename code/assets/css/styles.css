@@ -141,7 +141,7 @@ strong {
 
 .toast {
   position: fixed;
-  bottom: 0;
+  top: 0;
   right: 0;
   margin: 20px;
   padding-left: 15px;
