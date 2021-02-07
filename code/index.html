@@ -12,8 +12,8 @@
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/fonts/muli.css">
 </head>
-<body>
-<div id="app" :data-format="options.format" :data-promo="promo">
+<body class="loading">
+<div id="app" :data-format="options.format">
 
   <!-- main -->
   <main>
@@ -40,7 +40,7 @@
 
       <!-- mode -->
       <div class="form-group">
-        <span class="form-label">Display</span>
+        <span class="form-label">Mode</span>
         <select class="form-select" v-model="options.mode">
           <option value="list">List</option>
           <option value="table">Table</option>
@@ -70,7 +70,7 @@
 
       <!-- format -->
       <div class="form-group">
-        <span class="form-label">Sort by</span>
+        <span class="form-label">Show</span>
         <select class="form-select" v-model="options.format">
           <option value="all">All visit data</option>
           <option value="data">Title and URL</option>
@@ -109,7 +109,9 @@
                   <span class="item__title">{{ item.title }}</span>
                 </a>
                 <div v-if="showAll" class="item__info">
-                  <span>{{ item.count }} visits</span><span>{{ options.relativeTime ? item.relativeTime : item.date }}</span>
+                  <span>{{ item.count }} visits</span><span>{{
+                    options.relativeTime ? item.relativeTime : item.date
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -149,32 +151,45 @@
   </main>
 
   <!-- popover -->
-  <div v-if="promo" class="promo-container">
-    <div class="card promo">
+  <div class="promo-container" :class="{ visible: promo }">
+    <div v-if="promo" class="card promo">
       <div class="card-image">
         <img src="http://controlspace.app/images/mail/header.png" class="img-responsive">
       </div>
       <div class="card-header">
-        <div class="card-title h2">Looking for a new tab manager!?</div>
-        <div class="card-subtitle text-gray">
-        </div>
+        <div class="card-title h2">Looking for a new tab manager?</div>
       </div>
       <div class="card-body">
-        <p>Now that The Great Suspender has been removed from the Chrome Web Store,
-          you're going to need a replacement.</p>
-        <p><strong>Control Space</strong> is a soon-to-be-released tab manager designed for busy professionals, to browse,
-          organise, search and switch tabs with one simple shortcut.</p>
-        <p>It's smooth and fast yet brimming with features... <em>including</em> sending tabs to sleep.</p>
+        <p><strong>I'm working on something called Control Space, designed to browse, organise, search and
+          switch tabs with one simple shortcut.</strong></p>
+        <p>It's smooth and fast and provides a desktop-like experience to take control of your tabs, including search, workspaces, information surfacing and housekeeping tools, including decluttering and memory management.</p>
+        <p>It's currently in Early Access; click below to get added to the list.</p>
       </div>
       <div class="card-footer text-right" @click="promo = false">
-        <a class="btn btn-primary" href="https://controlspace.app" target="_blank">Show me now!</a>
+        <a class="btn btn-primary" href="https://controlspace.app" target="_blank">Sounds great - take me there!</a>
         <button class="btn">No thanks</button>
       </div>
     </div>
+
+    <div v-else class="card promo teaser">
+      <div class="card-image">
+        <img src="http://controlspace.app/images/mail/header.png" class="img-responsive">
+      </div>
+      <div class="card-header">
+        <div class="card-title h4">Looking for a new tab manager?</div>
+      </div>
+      <div class="card-body">
+        <p>Now that The Great Suspender has let you down,
+          maybe you're looking for a replacement?</p>
+      </div>
+      <div class="card-footer text-right">
+        <button class="btn btn-primary" @click="promo = true">Maybe I am - tell me more...</button>
+      </div>
+    </div>
+
   </div>
 
 </div>
-<script src="assets/js/utils.js"></script>
-<script src="scripts/content.js"></script>
+<script type="module" src="scripts/content.js"></script>
 </body>
 </html>

@@ -1,24 +1,26 @@
-/*
-  global getVisitTime:true,
-  dedupe:true,
-  sortBy: true,
-  copyTextToClipboard: true,
-  getFavIcon:true,
-  createBookmark: true,
-*/
+import { getVisitTime, copyTextToClipboard } from '../assets/js/utils.js'
+import { createBookmark, getFavIcon } from '../assets/js/browser.js'
+import { dedupe, sortBy } from '../assets/js/array.js'
 
-const isTest = location.search.includes('test')
-const isPromo = location.search.includes('promo')
+// query
+const params = new URLSearchParams(location.search)
+const query = Object.fromEntries(params)
 
-const app = new Vue({
+// app
+window.app = new Vue({
   el: '#app',
 
   data: {
+    // data
     loaded: false,
     items: [],
     message: '',
-    promo: !isTest || isPromo,
-    test: isTest,
+
+    // settings
+    promo: params.has('promo'),
+    query,
+
+    // options
     options: {
       mode: 'list',
       groupBy: 'domain',
@@ -91,6 +93,9 @@ const app = new Vue({
 
   methods: {
     search () {
+      // body
+      document.body.classList.remove('loading')
+
       // query
       const query = {
         text: 'chrome-extension://klbibkeccnjlkjkiokjodocebajanakg/suspended.html',
@@ -99,10 +104,10 @@ const app = new Vue({
       }
 
       // test
-      if (this.test) {
+      if (this.query.text) {
         Object.assign(query, {
-          text: 'a',
-          maxResults: 30,
+          text: this.query.text,
+          maxResults: Number(this.query.limit || 30),
         })
       }
 
@@ -257,5 +262,3 @@ const app = new Vue({
     },
   },
 })
-
-console.log(app)

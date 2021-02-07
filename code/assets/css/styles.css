@@ -10,6 +10,10 @@ body {
   font-size: 14px;
 }
 
+body.loading {
+  display: none;
+}
+
 h1 {
   font-weight: bold;
 }
@@ -17,6 +21,10 @@ h1 {
 p {
   font-size: 1.1em;
   line-height: 1.5;
+}
+
+strong {
+  color: #2b8be7;
 }
 
 .form-label {
@@ -158,21 +166,48 @@ p {
 
 .promo-container:after {
   position: fixed;
+}
+
+.promo-container.visible:after {
   display: block;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  background: rgba(255, 255, 255, .7);
+  background: rgba(255, 255, 255, .85);
   content: ".";
 }
 
-.promo {
+.promo, .teaser {
   position: fixed;
   bottom: 0;
   right: 0;
   margin: 20px;
-  width: 650px;
+  width: 590px;
   box-shadow: 0 20px 30px rgba(0, 0, 0, .2);
   z-index: 5;
+}
+
+.card-body p:last-of-type{
+  margin-bottom: .75rem;
+}
+
+.card-image {
+  width: 100%;
+  aspect-ratio: 144 / 90;
+}
+
+.teaser {
+  width: 400px;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------
+ * TRANSITIONS
+ */
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
