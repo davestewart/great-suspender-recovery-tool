@@ -22,7 +22,7 @@ You can then:
 
 Until the extension is in the app store, you can "side load" it using developer settings:
 
-1. Clone or [download](https://github.com/davestewart/great-suspender-recovery-tool/archive/v1.0.0.zip) this repository to your local hard drive
+1. Clone or [download](https://github.com/davestewart/great-suspender-recovery-tool/archive/v1.1.0.zip) this repository to your local hard drive
 2. Unzip the zip file somewhere if you downloaded
 3. Open Chrome and go **Settings > More Tools > Extensions**
 4. Toggle on the **Developer mode** switch top right
@@ -57,17 +57,17 @@ Copying to a spreadsheet:
 3. Click "Copy to Clipboard"
 4. Paste into a spreadsheet
 
-## Are you looking for a new tab manager!?
+
+## Are you looking for a new tab manager?
 
 [![control space](http://controlspace.app/images/mail/header.png)](http://controlspace.app)
 
 Now that The Great Suspender has been removed from the Chrome Web Store,
-you're going to need a replacement.
+perhaps you need a replacement?
 
-[Control Space](http://controlspace.app) is a soon-to-be-released tab manager designed for busy professionals, to browse,
-organise, search and switch tabs with one simple shortcut.
+[Control Space](http://controlspace.app) is a soon-to-be-released tab manager designed for tab-hoarders and tab-haters alike, which lets you browse, organise, search and switch tabs with one simple shortcut.
 
-It's smooth and fast and yet brimming with features:
+It's smooth and fast, yet brimming with features:
 
 - it's an actual, ***actual*** tab manager
 - see open, closed and saved tabs **in once place**
@@ -80,26 +80,45 @@ It's smooth and fast and yet brimming with features:
 [Click here to sign up to early access](http://controlspace.app)🤘
 
 
-## Running in test mode
+## Did you find this tool useful?
 
-If you don't have any Great Suspender tabs saved, you can check the extension works by appending the following query to the URL:
+An upvote on Product Hunt is always appeciated:
 
-```
-?test
-```
+<a href="https://www.producthunt.com/posts/the-great-suspender-recovery-tool?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-the-great-suspender-recovery-tool" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=283498" alt="The Great Suspender Recovery Tool - Recover your lost Great Suspender tabs | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+
+Thank you!
+
 
 ## Development
 
-The extension is not currently compiled, but there is a build process.
+### Running in test mode
 
-Install as usual:
+If you don't have any Great Suspender tabs saved, you can check the extension works by adding a manual query to the URL:
+
+```
+?text=hello&limit=100
+```
+
+### Scripts
+
+The extension is not currently compiled, but there is a build / release process.
+
+To install the packages:
 
 ```bash
 npm i
 ```
 
+Before releasing, modify the `src/manifest` version:
 
-Run the release script:
+```txt
+{
+  "version": "1.0.0",
+}
+```
+
+
+Then run the release script:
 
 ```bash
 npm run release
