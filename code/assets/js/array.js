@@ -12,11 +12,18 @@ export function dedupe (items) {
     }, [])
 }
 
+export function getValue (target, path) {
+  const props = path.split('.')
+  return props.reduce((target, prop) => {
+    return target[prop]
+  }, target)
+}
+
 export function sortBy (prop, numeric = false, order = 'asc') {
   return function (a, b) {
     // values
-    a = a[prop]
-    b = b[prop]
+    a = getValue(a, prop)
+    b = getValue(b, prop)
 
     // order
     if (order === 'desc') {

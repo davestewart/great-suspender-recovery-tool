@@ -48,13 +48,13 @@
       </div>
 
       <!-- group by -->
-      <div class="form-group">
+      <div v-if="options.mode === 'list'" class="form-group">
         <span class="form-label">Group by</span>
         <select class="form-select" v-model="options.groupBy">
           <option value="domain">Domain</option>
           <option value="date">Date</option>
           <option value="relativeTime">Relative time</option>
-          <option value="count">Visit count</option>
+          <option value="visitsText">Visits</option>
         </select>
       </div>
 
@@ -64,7 +64,7 @@
         <select class="form-select" v-model="options.sortBy">
           <option value="domain">Domain</option>
           <option value="date">Date / Time</option>
-          <option value="count">Visit Count</option>
+          <option value="visits">Visits</option>
         </select>
       </div>
 
@@ -99,17 +99,17 @@
 
       <!-- list -->
       <div v-if="options.mode === 'list'">
-        <section v-for="(group, name) in grouped" ref="group.title" class="group">
-          <h5 class="group__title">{{ name }}</h5>
+        <section v-for="group in grouped" ref="group.title" class="group">
+          <h5 class="group__title">{{ group.title }}</h5>
           <div class="group__items">
-            <div v-for="item in group" ref="item.url" class="item">
+            <div v-for="item in group.items" ref="item.url" class="item">
               <img :src="getIcon(item)" width="16" height="16" class="item__icon">
               <div class="item__text">
                 <a :href="item.url" class="item__link">
                   <span class="item__title">{{ item.title }}</span>
                 </a>
                 <div v-if="showAll" class="item__info">
-                  <span>{{ item.count }} visits</span><span>{{
+                  <span>{{ item.visits }} visits</span><span>{{
                     options.relativeTime ? item.relativeTime : item.date
                   }}</span>
                 </div>
@@ -131,7 +131,7 @@
         </thead>
         <tbody>
         <tr v-for="item in sorted" ref="item.id">
-          <td v-if="showAll" class="table__info">{{ item.count }}</td>
+          <td v-if="showAll" class="table__info">{{ item.visits }}</td>
           <td v-if="showAll" class="table__info">{{ getVisitTime(item) }}</td>
           <td v-if="showData">
             <img :src="getIcon(item)" width="16" height="16" class="item__icon">

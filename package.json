@@ -1,13 +1,11 @@
 {
-  "name": "multiflow-extension",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "great-suspender-recovery-tool",
+  "description": "Recover your lost Great Suspender Tabs!",
   "scripts": {
     "release": "node ./build/release.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Dave Stewart",
   "license": "ISC",
   "devDependencies": {
     "@types/vue": "^2.0.0",

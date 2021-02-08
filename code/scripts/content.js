@@ -1,4 +1,4 @@
-import { getVisitTime, copyTextToClipboard } from '../assets/js/utils.js'
+import { getVisitTime, copyTextToClipboard, plural } from '../assets/js/utils.js'
 import { createBookmark, getFavIcon } from '../assets/js/browser.js'
 import { dedupe, sortBy } from '../assets/js/array.js'
 
@@ -33,27 +33,57 @@ window.app = new Vue({
   computed: {
     sorted () {
       const prop = this.options.sortBy
-      const numeric = ['time', 'count'].includes(prop)
-      const order = prop === 'count' ? 'desc' : 'asc'
+      const numeric = ['date', 'visits'].includes(prop)
+      const order = numeric ? 'desc' : 'asc'
       return this.items.sort(sortBy(prop, numeric, order))
     },
 
     grouped () {
-      return this
+      // cache to optimise lookups
+      const cache = {}
+
+      // group
+      const grouped = this
         .sorted
         .reduce((output, item) => {
           // group
-          const group = item[this.options.groupBy]
-          if (!output[group]) {
-            output[group] = []
+          const title = item[this.options.groupBy]
+
+          // if group not yet created...
+          if (!cache[title]) {
+            // create group
+            const group = {
+              title: title,
+              time: item.time,
+              visits: item.visits,
+              items: [],
+            }
+
+            // update objects
+            cache[title] = group
+            output.push(group)
           }
 
           // add item
-          output[group].push(item)
+          cache[title].items.push(item)
 
           // return
           return output
-        }, {})
+        }, [])
+
+      // sorting
+      const sortMap = {
+        domain: 'title',
+        visitsText: 'visits',
+        date: 'time',
+        relativeTime: 'time',
+      }
+      const prop = this.options.groupBy
+      const propSort = sortMap[prop]
+      const numeric = ['visitsText', 'date', 'relativeTime'].includes(prop)
+      return numeric
+        ? grouped.sort(sortBy(propSort, true, 'desc'))
+        : grouped
     },
 
     showAll () {
@@ -103,7 +133,7 @@ window.app = new Vue({
         maxResults: 10000,
       }
 
-      // test
+      // custom text
       if (this.query.text) {
         Object.assign(query, {
           text: this.query.text,
@@ -130,13 +160,15 @@ window.app = new Vue({
         const url = params.get('uri') || item.url
         const dateTime = getVisitTime(time)
         const relativeTime = getVisitTime(time, true)
+        const visits = item.visitCount
 
         // return
         return {
           domain: new URL(url).hostname,
           title,
           url,
-          count: item.visitCount,
+          visits,
+          visitsText: plural(visits, 'visit'),
           dateTime,
           date: dateTime.substring(0, 10),
           relativeTime,
@@ -159,7 +191,7 @@ window.app = new Vue({
       const bookmarkBarId = '2'
       const rootFolderTitle = 'Recovered Great Suspender Tabs'
       const grouped = this.grouped
-      const numGroups = Object.keys(grouped).length
+      const numGroups = grouped.length
       const numTabs = this.sorted.length
 
       // remove old folder
@@ -183,17 +215,17 @@ window.app = new Vue({
       })
 
       // loop over groups
-      const promises = Object.keys(grouped).map(async function (key) {
+      const promises = grouped.map(async function (group) {
         // create group folder
         const folder = await createBookmark({
           parentId: root.id,
-          title: key,
+          title: group.title,
         })
 
         // loop over items
-        const items = grouped[key]
+        const items = group.items
         const promises = items.map(async function (item) {
-          return await createBookmark({
+          return createBookmark({
             parentId: folder.id,
             title: item.title,
             url: item.url,
@@ -227,27 +259,35 @@ window.app = new Vue({
         const data = this.items.map(item => {
           switch (this.options.format) {
             case 'url':
-              return item.url
+              return {
+                url: item.url,
+              }
 
             case 'data':
-              return getRow({
+              return {
                 title: item.title,
                 url: item.url,
-              })
+              }
 
             case 'all':
             default:
-              return getRow({
-                count: item.count,
+              return {
+                visits: item.visits,
                 time: getVisitTime(item.time, this.options.relativeTime),
                 title: item.title,
                 url: item.url,
-              })
+              }
           }
         })
 
+        // convert data to lines
+        const lines = data.map(getRow)
+
+        // prepend headers
+        lines.unshift(getRow(Object.keys(data[0])))
+
         // copy
-        copyTextToClipboard(data.join('\n'))
+        copyTextToClipboard(lines.join('\n'))
         this.message = `
           <h5>Data copied OK!</h5>
           <p>You can now paste it into a spreadsheet</p>

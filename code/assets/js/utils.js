@@ -1,58 +1,70 @@
+export function plural (num, word, includeNumber = true) {
+  if (num !== 1) {
+    word = word + 's'
+  }
+  return includeNumber
+    ? `${num} ${word}`
+    : word
+}
+
 export function timeAgo (time) {
-  const ms = Date.now() - time
-  let ago = Math.floor(ms / 1000)
-  let part = 0
-
-  if (ago < 7200) {
-    return '1 hour ago'
-  }
-  if (ago < 86400) {
-    while (ago >= 3600) {
-      ago -= 3600
-      part += 1
+  const template = function (t, n) {
+    const templates = {
+      seconds: 'Less than a minute',
+      minute: 'About 1 minute',
+      minutes: '%d minutes',
+      hour: 'About 1 hour',
+      hours: 'About %d hours',
+      day: '1 day',
+      days: '%d days',
+      month: 'About 1 month',
+      months: '%d months',
+      year: 'About 1 year',
+      years: '%d years',
     }
-    return part + ' hours ago'
+    return templates[t] && templates[t].replace(/%d/i, Math.abs(Math.round(n))) + ' ago'
   }
 
-  if (ago < 172800) {
-    return '1 day ago'
-  }
-  if (ago < 604800) {
-    while (ago >= 172800) {
-      ago -= 172800
-      part += 1
-    }
-    return part + ' days ago'
-  }
+  // time components
+  const now = new Date()
+  const seconds = ((now.getTime() - time) * 0.001) >> 0
+  const minutes = seconds / 60
+  const hours = minutes / 60
+  const days = hours / 24
+  const years = days / 365
 
-  if (ago < 1209600) {
-    return '1 week ago'
+  // return text
+  if (seconds < 45) {
+    return template('seconds', seconds)
   }
-  if (ago < 2592000) {
-    while (ago >= 604800) {
-      ago -= 604800
-      part += 1
-    }
-    return part + ' weeks ago'
+  if (seconds < 90) {
+    return template('minute', 1)
   }
-
-  if (ago < 5184000) {
-    return '1 month ago'
+  if (minutes < 45) {
+    return template('minutes', minutes)
   }
-  if (ago < 31536000) {
-    while (ago >= 2592000) {
-      ago -= 2592000
-      part += 1
-    }
-    return part + ' months ago'
+  if (minutes < 90) {
+    return template('hour', 1)
   }
-
-  if (ago < 1419120000) { // 45 years, approximately the epoch
-    return 'more than year ago'
+  if (hours < 24) {
+    return template('hours', hours)
   }
-
-  // TODO pass in Date.now() and ms to check for 0 as never
-  return 'never'
+  if (hours < 42) {
+    return template('day', 1)
+  }
+  if (days < 30) {
+    return template('days', days)
+  }
+  if (days < 45) {
+    return template('month', 1)
+  }
+  if (days < 365) {
+    return template('months', days / 30)
+  }
+  if (years < 1) {
+    return template('year', 1)
+  }
+  return template('years', years)
 }
 
 export function getVisitTime (timestamp, relative) {
