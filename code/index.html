@@ -109,9 +109,18 @@
                   <span class="item__title">{{ item.title }}</span>
                 </a>
                 <div v-if="showAll" class="item__info">
-                  <span>{{ item.visits }} visits</span><span>{{
-                    options.relativeTime ? item.relativeTime : item.date
-                  }}</span>
+                  <template v-if="options.groupBy === 'domain'">
+                    <span>{{ item.visitsText }}</span>
+                    <span>{{ options.relativeTime ? item.relativeTime : item.date }}</span>
+                  </template>
+                  <template v-else-if="options.groupBy === 'visitsText'">
+                    <span>{{ options.relativeTime ? item.relativeTime : item.date }}</span>
+                    <span>{{ item.url }}</span>
+                  </template>
+                  <template v-else>
+                    <span>{{ item.visitsText }}</span>
+                    <span>{{ item.url }}</span>
+                  </template>
                 </div>
               </div>
             </div>

@@ -54,6 +54,10 @@ strong {
   padding: 10px 30px;
 }
 
+.group__items .item__info span:not(:first-child) {
+  margin-left: -.3em;
+}
+
 .item {
   display: flex;
   margin-bottom: .5em;
