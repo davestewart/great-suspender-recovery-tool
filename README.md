@@ -20,14 +20,23 @@ You can then:
 
 ### Manual installation
 
-Until the extension is in the app store, you can "side load" it using developer settings:
+Until the extension is in the app store, you can "side load" it using developer settings.
 
-1. [Download](https://github.com/davestewart/great-suspender-recovery-tool/releases/latest) the latest release and unzip the file
-2. Open Chrome and go **Settings > More Tools > Extensions**
-3. Toggle on the **Developer mode** switch top right
-4. Click the **Load unpacked** button top left
-5. Navigate to the extension's `code/` folder (the one with the `manifest.json` file!)
-6. Click to confirm the folder choice
+First, download the file:
+
+1. Visit the [latest release page](https://github.com/davestewart/great-suspender-recovery-tool/releases/latest) and click the **Source code (zip)** link
+2. Unzip the downloaded file, so it creates its own folder
+
+Next, enable developer mode:
+
+3. Open Chrome and go **Settings > More Tools > Extensions**
+4. Toggle on the **Developer mode** switch top right
+
+Finally, load the extension:
+
+5. Click the **Load unpacked** button top left
+6. Navigate to the extension's `code/` folder (the one with the `manifest.json` file!)
+7. Click to confirm the folder choice
 
 
 ### Installation from the Chrome Web Store
