@@ -22,7 +22,7 @@ You can then:
 
 Until the extension is in the app store, you can "side load" it using developer settings:
 
-1. Clone or [download](https://github.com/davestewart/great-suspender-recovery-tool/archive/v1.1.0.zip) this repository to your local hard drive
+1. Clone or [download](https://github.com/davestewart/great-suspender-recovery-tool/archive/v1.2.0.zip) this repository to your local hard drive
 2. Unzip the zip file somewhere if you downloaded
 3. Open Chrome and go **Settings > More Tools > Extensions**
 4. Toggle on the **Developer mode** switch top right
