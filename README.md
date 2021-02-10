@@ -18,9 +18,22 @@ You can then:
 
 ## Installation
 
-### Manual installation
+### From the Chrome Web Store
 
-Until the extension is in the app store, you can "side load" it using developer settings.
+1. Visit the extension's [page](https://chrome.google.com/webstore/detail/great-suspender-recovery/ainlmpkfinfbbgdpimmldfdgpenmclmk)
+2. Click "Add to Chrome"
+
+> Note that the published version (1.0) is currently 2 minor versions behind the current version (1.3) because of the time it takes to review extensions.
+> 
+> **Note that all versions will recover your tabs just fine!**
+>
+> *For the latest version, follow the steps below.*
+
+### Latest version
+
+The latest version contains some minor UI tweaks and more user-friendly information.
+
+You can "side load" this version using the extension page's "developer" settings:
 
 First, download the file:
 
@@ -37,13 +50,6 @@ Finally, load the extension:
 5. Click the **Load unpacked** button top left
 6. Navigate to the extension's `code/` folder (the one with the `manifest.json` file!)
 7. Click to confirm the folder choice
-
-
-### Installation from the Chrome Web Store
-
-1. Go the extensions's Chrome Web Store [page](https://chrome.google.com/webstore/detail/great-suspender-recovery/ainlmpkfinfbbgdpimmldfdgpenmclmk) *(this won't work yet)*
-2. Click "Add to Chrome"
-
 
 ## Instructions
 
