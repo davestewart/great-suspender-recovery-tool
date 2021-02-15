@@ -18,6 +18,11 @@ You can then:
 
 ## Installation
 
+1. Visit the [extension's page](https://chrome.google.com/webstore/detail/great-suspender-recovery/ainlmpkfinfbbgdpimmldfdgpenmclmk) on the Chrome Web Store
+2. Click "Add to Chrome"
+
+<!--
+
 ### From the Chrome Web Store
 
 1. Visit the extension's [page](https://chrome.google.com/webstore/detail/great-suspender-recovery/ainlmpkfinfbbgdpimmldfdgpenmclmk)
@@ -50,6 +55,8 @@ Finally, load the extension:
 5. Click the **Load unpacked** button top left
 6. Navigate to the extension's `code/` folder (the one with the `manifest.json` file!)
 7. Click to confirm the folder choice
+
+-->
 
 ## Instructions
 
